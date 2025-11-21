@@ -1,0 +1,11 @@
+__pycache__/**/*
+*/**/__pycache__/**/*
+**/*.pyc
+
+.ipynb_checkpoints
+.venv
+
+generated
+lstm_model/**/*
+img/*-mirrored*
+img/*-offset*

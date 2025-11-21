@@ -23,6 +23,33 @@ class Model:
         probabilities = exp_probabilities/sum(exp_probabilities)
         val = choice(keys, p=probabilities) 
         return int(val)
+
+    def _get_pixels_from_likeliness(self, value_counts: Dict[int, int]) -> List[int]:
+        values = list(value_counts.values())
+        keys = list(value_counts.keys())
+        exp_probabilities = (array(values)/sum(values))
+        probabilities = exp_probabilities/sum(exp_probabilities)
+
+        hashed_keys = []
+        hashed_key_to_key_map = {}
+        for key in keys:
+            sub_keys = []
+            for i in range(len(key)):
+                if key[i] is not None:
+                    sub_keys.append(key[i]**(len(key) - i))
+            hashed_keys.append(sum(sub_keys) if len(sub_keys) > 0 else None)
+            hashed_key_to_key_map[hashed_keys[-1]] = key
+              
+        vals = choice(hashed_keys, p=probabilities) 
+
+        return hashed_key_to_key_map[vals]        
+    
+    def _get_pixel_values_after_point(self, x: int, y: int, length: int, image_width: int, full_image: List[int], nan_value: Any = None) -> List[int]:
+        pix_ix = int(y * image_width + x)
+        return [
+            int(full_image[pix_ix]) if pix_ix < len(full_image) else nan_value
+            for pix_ix in range(pix_ix, pix_ix + length)
+        ]
     
     def _get_all_values_behind_point(self, x: int, y: int, width: int, full_image: List[int]) -> Dict[int, int]:
         current_pix_ix = int(x + y * width)
