@@ -15,7 +15,7 @@ def run_pipeline(image_root_path: str) -> None:
         os.mkdir("generated")
 
     print("Training kernel models...")
-    kernel_sizes = [1, 5, 9, 13, 17, 21]
+    kernel_sizes = [9]#[1, 5, 9, 13, 17, 21]
     kernel_models = []
     for kernel_size in kernel_sizes:
         kernel_model = KernelModel(kernel_size=kernel_size, is_kernal_centred=kernel_size%2==1)
@@ -27,5 +27,8 @@ def run_pipeline(image_root_path: str) -> None:
     for kernel_model in kernel_models:
         generated_image = kernel_model.generate(epochs = 25, seed=generated_image)
         save_image(f"./generated/test_kernel_{kernel_model.kernel_size}.png", generated_image)
+
+    print("Cleaning up temporary data...")
+    delete_previous_duplications(image_root_path)
 
     print("Complete!")
