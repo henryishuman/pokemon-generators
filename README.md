@@ -21,3 +21,5 @@ This project is organised into `models` and `pipelines`.
 So far, the only pipeline which exists is that of the `kernal_model_pipeline`. I am planning on adding further pipelines in the future. To run this, execute the `generate_pokemon_images.py` script, i.e.:
 
 `python generate_pokemon_images.py`
+
+This will output a series of images at different stages of training and generation. This process may take some time. ~10 minutes.
